@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scisys Dot - Hypnica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- ตั้งค่าฟอนต์อ้วนกลมคิวท์ๆ ทุกจุด --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 600;
+        }
+
+        body {
+            background-color: #FDFBF7;
+            color: #4A3525;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 0 40px 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* --- ส่วนหัวโปรไฟล์ + รูปปกหลัง --- */
+        .profile-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-cover {
+            width: 100%;
+            height: 150px;
+            background-color: #EADFD7;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            width: 100%;
+            padding: 0 24px;
+            margin-top: -45px; 
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid #FDFBF7; 
+            box-shadow: 0 6px 16px rgba(74, 53, 37, 0.08);
+            object-fit: cover;
+            background-color: #E6DCD3;
+        }
+
+        .profile-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #4A3525;
+            margin-top: 4px;
+        }
+
+        .profile-subtitle {
+            font-size: 13px;
+            color: #8C7665;
+            background-color: #FFFFFF;
+            padding: 6px 16px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(74, 53, 37, 0.04);
+            font-weight: 600;
+        }
+
+        /* --- หัวข้อโซนต่างๆ --- */
+        .section-header {
+            font-size: 13px;
+            font-weight: 700;
+            color: #8C7665;
+            letter-spacing: 0.8px;
+            margin-bottom: -16px;
+            padding: 0 24px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-header-title::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 12px;
+            background-color: #C6A48E;
+            border-radius: 2px;
+        }
+
+        .scroll-hint {
+            font-size: 11px;
+            color: #C6A48E;
+        }
+
+        /* --- โซนการแนะนำเบื้องต้น --- */
+        .intro-text-section {
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .intro-paragraph {
+            font-size: 13px;
+            color: #6E5543;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .text-q {
+            color: #C6A48E;
+            font-weight: 700;
+        }
+
+        .text-a {
+            color: #5C4636;
+        }
+
+        /* --- โซนแบนเนอร์มินิจัตุรัสสไลด์ --- */
+        .carousel-mini-container {
+            width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 5px 0px; 
+            -webkit-overflow-scrolling: touch; 
+            scroll-behavior: smooth; 
+        }
+
+        .carousel-mini-container::-webkit-scrollbar { display: none; }
+
+        .carousel-mini-inner {
+            display: flex;
+            gap: 12px;
+            width: max-content;
+            padding-left: 24px;
+            padding-right: 24px; 
+        }
+
+        .banner-mini-card {
+            width: 105px; 
+            background-color: #FFFFFF;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(74, 53, 37, 0.04);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(230, 220, 211, 0.4);
+        }
+
+        .banner-mini-img {
+            width: 100%;
+            height: 60px; 
+            object-fit: cover;
+            background-color: #E6DCD3;
+        }
+
+        .banner-mini-content {
+            padding: 8px 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: center;
+        }
+
+        .banner-mini-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #4A3525;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .banner-mini-desc {
+            font-size: 9px;
+            color: #8C7665;
+            line-height: 1.3;
+            min-height: 24px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .banner-mini-price {
+            font-size: 11px;
+            font-weight: 700;
+            color: #C6A48E;
+            margin-top: 2px;
+            border-top: 1px dashed #F5EFEB;
+            padding-top: 3px;
+        }
+
+        /* --- โซนการ์ดเดี่ยวขนาดใหญ่สไลด์ --- */
+        .hint-bar {
+            background-color: #F5EFEB;
+            color: #8C7665;
+            font-size: 11px;
+            text-align: center;
+            padding: 6px 12px;
+            border-radius: 30px;
+            margin: 0 24px -16px 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hint-dot {
+            width: 5px;
+            height: 5px;
+            background-color: #C6A48E;
+            border-radius: 50%;
+        }
+
+        .large-carousel-container {
+            width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+            display: flex;
+            scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            padding: 10px 0px 5px 0px;
+        }
+
+        .large-carousel-container::-webkit-scrollbar { display: none; }
+        .large-carousel-inner { display: flex; gap: 16px; padding-left: 24px; padding-right: 24px; }
+
+        .product-card-large {
+            width: calc(430px - 48px); 
+            max-width: calc(100vw - 48px);
+            background-color: #FFFFFF;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(230, 220, 211, 0.5);
+            box-shadow: 0 10px 28px rgba(74, 53, 37, 0.05);
+            scroll-snap-align: center;
+            flex-shrink: 0;
+        }
+
+        .product-img-preview {
+            width: 100%;
+            height: 165px;
+            object-fit: cover;
+            background-color: #E6DCD3;
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #4A3525;
+            border-bottom: 1px solid #F5EFEB;
+            padding-bottom: 8px;
+        }
+
+        .info-block-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #8C7665;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .features-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .features-list li {
+            font-size: 12px;
+            color: #5C4636;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: #C6A48E;
+            font-weight: 800;
+        }
+
+        .price-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background-color: #FAF6F0;
+            padding: 10px 12px;
+            border-radius: 12px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6E5543;
+        }
+
+        .grand-price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            border-top: .5px dashed #E6DCD3;
+            padding-top: 12px;
+        }
+
+        .grand-price-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #C6A48E;
+        }
+
+        /* --- โซนตารางคิวงาน --- */
+        .queue-section {
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .queue-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .queue-main-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #4A3525;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .admin-toggle-btn {
+            background-color: #E6DCD3;
+            color: #6E5543;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .admin-toggle-btn svg { width: 14px; height: 14px; fill: currentColor; }
+        .admin-toggle-btn.active { background-color: #C6A48E; color: #FFFFFF; }
+
+        .admin-panel {
+            background-color: #FAF6F0;
+            border: 2px dashed #C6A48E;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .admin-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+            border-bottom: 2px solid #E6DCD3;
+            padding-bottom: 8px;
+        }
+
+        .admin-tab-btn {
+            background: none;
+            border: none;
+            font-size: 11px;
+            padding: 6px;
+            color: #8C7665;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .admin-tab-btn.active {
+            background-color: #C6A48E;
+            color: white;
+        }
+
+        .admin-form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .admin-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 2px solid rgba(230, 220, 211, 0.8);
+            font-size: 12px;
+            outline: none;
+            background-color: #FFFFFF;
+            color: #4A3525;
+        }
+
+        .admin-input:focus { border-color: #C6A48E; }
+
+        .link-preview-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .live-preview-box {
+            width: 100%;
+            height: 90px;
+            border-radius: 12px;
+            background-color: #FFFFFF;
+            border: 2px dashed #E6DCD3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            color: #BCB0A5;
+            overflow: hidden;
+        }
+
+        .live-preview-box img { width: 100%; height: 100%; object-fit: cover; }
+        .admin-action-row { display: flex; gap: 8px; }
+
+        .admin-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .admin-btn-save { background-color: #C6A48E; color: white; }
+        .admin-btn-cancel { background-color: #BCB0A5; color: white; }
+
+        .card-admin-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+            border-top: 1px dashed #FAF6F0;
+            padding-top: 10px;
+        }
+
+        .card-action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-action-btn svg { width: 12px; height: 12px; fill: currentColor; }
+        .btn-edit { background-color: #F5EFEB; color: #8C7665; }
+        .btn-delete { background-color: #FADBD8; color: #C0392B; }
+
+        .search-container {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 14px;
+            border: 2px solid rgba(230, 220, 211, 0.8);
+            background-color: #FFFFFF;
+            font-size: 13px;
+            color: #4A3525;
+            outline: none;
+        }
+
+        .search-button {
+            padding: 0 16px;
+            background-color: #C6A48E;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 14px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .queue-summary-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .queue-tab {
+            background-color: #FFFFFF;
+            padding: 8px 4px;
+            border-radius: 14px;
+            text-align: center;
+            border: 1px solid rgba(230, 220, 211, 0.4);
+            box-shadow: 0 4px 10px rgba(74, 53, 37, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 54px;
+        }
+
+        .queue-tab-label { font-size: 10px; color: #8C7665; display: block; margin-bottom: 2px; }
+        .queue-tab-count { font-size: 15px; font-weight: 700; }
+        .queue-tab-count.working { color: #D1A17A; }
+        .queue-tab-count.waiting { color: #8C7665; }
+        .queue-tab-count.success { color: #A8B89A; font-size: 18px; }
+
+        .queue-list-wrapper { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+
+        .queue-user-card {
+            background-color: #FFFFFF;
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid rgba(230, 220, 211, 0.5);
+            box-shadow: 0 6px 16px rgba(74, 53, 37, 0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .queue-user-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #FAF6F0; padding-bottom: 8px; }
+        .queue-user-meta { display: flex; flex-direction: column; gap: 1px; }
+        .queue-id-tag { font-size: 10px; font-weight: 700; color: #C6A48E; background-color: #FAF6F0; padding: 2px 8px; border-radius: 6px; width: fit-content; margin-bottom: 2px; }
+        .queue-user-name { font-size: 14px; color: #4A3525; }
+        .queue-user-facebook { font-size: 11px; color: #8C7665; }
+        .queue-status-badge { font-size: 10px; padding: 4px 12px; border-radius: 20px; }
+        .queue-status-badge.working { background-color: #FFF3E7; color: #C68E5C; }
+        .queue-status-badge.waiting { background-color: #F5EFEB; color: #8C7665; }
+        .queue-status-badge.success { background-color: #F1F6EE; color: #71885E; }
+
+        .queue-user-details { display: flex; flex-direction: column; gap: 4px; }
+        .queue-detail-row { display: flex; font-size: 12px; line-height: 1.4; }
+        .queue-detail-label { color: #8C7665; width: 75px; flex-shrink: 0; }
+        .queue-detail-value { color: #5C4636; }
+        .no-queue-match { display: none; text-align: center; padding: 20px; font-size: 13px; color: #8C7665; background-color: #FAF6F0; border-radius: 16px; border: 2px dashed #E6DCD3; }
+
+        /* --- ล็อกอินความปลอดภัยป๊อปอัป --- */
+        .cute-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(74, 53, 37, 0.4);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 24px;
+        }
+
+        .cute-modal-card {
+            background-color: #FFFFFF;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 340px;
+            padding: 24px;
+            box-shadow: 0 12px 36px rgba(74, 53, 37, 0.15);
+            border: 2px solid #E6DCD3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+            animation: cutePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes cutePop {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-icon-container {
+            width: 64px;
+            height: 64px;
+            background-color: #FAF6F0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #C6A48E;
+        }
+
+        .modal-spin-icon {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+            animation: gentleSpin 6s linear infinite;
+        }
+
+        @keyframes gentleSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cute-modal-card h3 { font-size: 16px; color: #4A3525; }
+
+        .cute-modal-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            border: 2px solid #E6DCD3;
+            font-size: 15px;
+            text-align: center;
+            outline: none;
+            color: #4A3525;
+            background-color: #FAF6F0;
+        }
+
+        .cute-modal-actions { display: flex; gap: 10px; width: 100%; }
+        .cute-modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .cute-modal-btn.btn-confirm { background-color: #C6A48E; color: white; }
+        .cute-modal-btn.btn-cancel { background-color: #F5EFEB; color: #8C7665; }
+
+        /* --- ส่วนท้ายคอนแทกต์ --- */
+        .bio-contact-section { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 10px; padding: 0 24px; }
+        .contact-title { font-size: 12px; color: #8C7665; letter-spacing: 1px; }
+        .contact-buttons-group { display: flex; gap: 16px; }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+            color: #8C7665;
+            border: 1px solid rgba(230, 220, 211, 0.6);
+            box-shadow: 0 4px 12px rgba(74, 53, 37, 0.03);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .contact-btn svg { width: 22px; height: 22px; fill: currentColor; }
+        .contact-btn:hover {
+            color: #FFFFFF;
+            background-color: #C6A48E;
+            border-color: #C6A48E;
+            transform: translateY(-4px);
+        }
+
+        .footer-wrapper { text-align: center; margin-top: 5px; padding: 0 24px; }
+        .credit-text { font-size: 11px; color: #BCB0A5; }
+    </style>
+</head>
+<body>
+
+    <!-- ล็อกอินยืนยันรหัสความปลอดภัย -->
+    <div id="cuteAuthModal" class="cute-modal-overlay">
+        <div class="cute-modal-card">
+            <div class="modal-icon-container">
+                <svg class="modal-spin-icon" viewBox="0 0 24 24">
+                    <path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm0 2a3 3 0 0 1 3 3v3H9V7a3 3 0 0 1 3-3zm0 11a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                </svg>
+            </div>
+            <h3 id="cuteModalTitle">กรุณากรอกรหัสผ่านขั้นที่ 1</h3>
+            <input type="password" id="cuteModalInput" class="cute-modal-input" placeholder="••••••••">
+            <div class="cute-modal-actions">
+                <button type="button" class="cute-modal-btn btn-cancel" onclick="closeCuteModal()">ยกเลิก</button>
+                <button type="button" class="cute-modal-btn btn-confirm" onclick="submitCuteModal()">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- ส่วนหัวโปรไฟล์ -->
+        <div class="profile-container">
+            <div class="profile-cover"></div>
+            <div class="profile-section">
+                <img class="profile-avatar" src="https://discord.com/channels/@me/1477420768018305044/1510109687901720727" onerror="this.src='https://via.placeholder.com/90/E6DCD3/8C7665?text=BIO'" alt="Avatar">
+                <div class="profile-title">Scisys Dot - Hypnica</div>
+                <div class="profile-subtitle">ฮายฮายเค้าซายนะคะ รับทำเว็บไบโอ ตามบรีพเริ่มต้น 69thb. ♡♡</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-header-title">การแนะนำเบื้องต้น</div>
+        </div>
+
+        <div class="intro-text-section">
+            <p class="intro-paragraph">
+                <span class="text-q">ลูกค้าที่น่ารักของซาย :</span> ทำไมราคาเอฟถึงถูกกว่าสั่งทำคะ<br>
+                <span class="text-a">ซาย :</span> เพราะงานปล่อยเอฟมันซ้ำๆคละๆกัน ไม่เหมือนงานสั่งทำค่ะ จะเป็นของคุณไม่ซ้ำใคร
+            </p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-header-title">OUR SERVICES</div>
+            <div class="scroll-hint">ปัดซ้าย-ขวา ➔</div>
+        </div>
+
+        <div class="carousel-mini-container">
+            <div class="carousel-mini-inner" id="miniCarouselContainer"></div>
+        </div>
+
+        <div class="hint-bar">
+            <div class="hint-dot"></div>
+            <span>เลื่อนซ้าย-ขวา เพื่อดูราคาและรายละเอียดแพ็กเกจใหญ่</span>
+        </div>
+
+        <div class="large-carousel-container">
+            <div class="large-carousel-inner" id="largeCarouselContainer"></div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-header-title">WORK QUEUE</div>
+        </div>
+
+        <div class="queue-section">
+            <div class="queue-header-row">
+                <h2 class="queue-main-title">ตารางอัปเดต<br>ลำดับการเรียงคิว</h2>
+                <button type="button" id="adminToggleBtn" class="admin-toggle-btn" onclick="toggleAdminMode()">
+                    <svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1a8.014 8.014 0 0 0-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l-.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3-1.57-3-3.5s1.07-3.5 3-3.5 3 1.57 3 3.5-1.07 3.5-3 3.5z"/></svg>
+                    <span>จัดการคิว</span>
+                </button>
+            </div>
+            
+            <div id="adminPanel" class="admin-panel" style="display: none;">
+                <div class="admin-tabs">
+                    <button class="admin-tab-btn active" id="tab-queue" onclick="switchAdminTab('queue')">จัดการคิวงาน</button>
+                    <button class="admin-tab-btn" id="tab-mini" onclick="switchAdminTab('mini')">บริการเล็ก</button>
+                    <button class="admin-tab-btn" id="tab-large" onclick="switchAdminTab('large')">แพ็กเกจใหญ่</button>
+                </div>
+                
+                <h3 id="formTitle" style="font-size: 13px; color: #4A3525;">เพิ่มคิวงานใหม่</h3>
+                <input type="hidden" id="editIndex" value="">
+                
+                <div id="dynamicFormFields"></div>
+                
+                <div class="admin-action-row">
+                    <button type="button" class="admin-btn admin-btn-save" onclick="saveAdminData()">บันทึกข้อมูล</button>
+                    <button type="button" class="admin-btn admin-btn-cancel" onclick="clearAdminForm()">ล้างฟอร์ม</button>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="queueSearchInput" class="search-input" placeholder="กรอกรหัสคิวค้นหา...">
+                <button type="button" class="search-button" onclick="searchQueue()">ค้นหาคิว</button>
+            </div>
+            
+            <div class="queue-summary-tabs">
+                <div class="queue-tab"><span class="queue-tab-label">กำลังเริ่มงาน</span><span id="countWorking" class="queue-tab-count working">0 คิว</span></div>
+                <div class="queue-tab"><span class="queue-tab-label">รอคิว</span><span id="countWaiting" class="queue-tab-count waiting">0 คิว</span></div>
+                <div class="queue-tab"><span class="queue-tab-label">เสร็จสิ้น</span><span id="countSuccess" class="queue-tab-count success">0 คิว</span></div>
+            </div>
+            
+            <div id="noMatchMessage" class="no-queue-match">ไม่พบข้อมูลระบบค้นหาค่ะ 🥺</div>
+            <div class="queue-list-wrapper" id="queueList"></div>
+        </div>
+
+        <div class="bio-contact-section">
+            <span class="contact-title">Contact Me</span>
+            <div class="contact-buttons-group">
+                <a href="https://www.facebook.com/share/1CjCi6Mr9e/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                    <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+                </a>
+                <a href="https://lin.ee/yihsj6J" target="_blank" rel="noopener noreferrer" class="contact-btn">
+                    <svg viewBox="0 0 24 24"><path d="M24 10.302c0-4.86-4.746-8.802-10.6-8.802S2.8 5.442 2.8 10.302c0 4.356 3.774 8.01 8.874 8.706l-1.35 4.056c-.138.408.192.834.624.714l4.908-2.82c.546.072 1.104.114 1.674.114 5.854 0 10.6-3.948 10.6-8.802-.006-.114-.012-.222-.03-.33z"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-wrapper"><div class="credit-text">Welcome to my space</div></div>
+    </div>
+
+    <script>
+        const startQueues = [
+            { num: 1, id: "1001", name: "คุณนลิน", contact: "FB: Nalin Mind", status: "working", type: "โลโก้ Chibi ร้านค้า", brief: "เน้นโทนสีชมพูพาสเทล มีไอคอนขนมหวานหวานละมุน" },
+            { num: 2, id: "1002", name: "คุณธันวา", contact: "FB: Thanwa Craft", status: "waiting", type: "สติกเกอร์ไลน์น่ารัก", brief: "ตัวละครเด็กผู้หญิงแก้มป่อง แสดงอารมณ์ต่างๆ 8 ท่าทาง" },
+            { num: 5, id: "1005", name: "คุณมินทร์", contact: "FB: Minty Sky", status: "success", type: "วาดรูปตัวละครสไตล์การ์ตูน", brief: "วาดภาพเดี่ยวใส่เสื้อฮู้ดสีครีม ถือแก้วชานมไข่มุก" }
+        ];
+
+        const startMini = [
+            { id: "m1", title: "บริการ 1", desc: "รายละเอียดสั้นๆ", price: "฿69", img: "https://via.placeholder.com/105x60/E6DCD3/8C7665?text=Mini+1" },
+            { id: "m2", title: "บริการ 2", desc: "รายละเอียดสั้นๆ", price: "฿89", img: "https://via.placeholder.com/105x60/E6DCD3/8C7665?text=Mini+2" }
+        ];
+
+        const startLarge = [
+            { id: "l1", name: "01. แพ็กเกจเริ่มต้น / บริการแบบที่ 1", feature: "ไฟล์งานความละเอียดสูงคุมโทนพาสเทล, ปรับแก้ไขโครงสร้างฟรี 2 ครั้ง", label1: "ราคาตั้งต้นชิ้นงาน", price1: "฿150", label2: "แก้งานเพิ่มจากโควตา", price2: "+฿30", total: "฿150.-", img: "https://via.placeholder.com/400x165/EADFD7/8C7665?text=Package+1" }
+        ];
+
+        let queueData = JSON.parse(localStorage.getItem('saved_queues_v3')) || startQueues;
+        let miniData = JSON.parse(localStorage.getItem('saved_mini_v3')) || startMini;
+        let largeData = JSON.parse(localStorage.getItem('saved_large_v3')) || startLarge;
+
+        let isAdminLoggedIn = false;
+        let authStep = 1;
+        let currentTab = 'queue';
+
+        function handleLinkInput(url) {
+            const box = document.getElementById('livePreviewBox');
+            if (!box) return;
+            if (url.trim() === "") {
+                box.innerHTML = "ระบบ AI รอสแกนแปลงลิงก์เป็นรูปภาพพรีวิว...";
+            } else {
+                box.innerHTML = `<img src="${url}" onerror="this.parentNode.innerHTML='ลิงก์ภาพไม่สมบูรณ์หรือไม่ถูกต้องค่ะ';">`;
+            }
+        }
+
+        function switchAdminTab(tabName) {
+            currentTab = tabName;
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            clearAdminForm();
+        }
+
+        function generateFormFields() {
+            const container = document.getElementById('dynamicFormFields');
+            if (currentTab === 'queue') {
+                document.getElementById('formTitle').innerText = document.getElementById('editIndex').value === "" ? "➕ เพิ่มคิวงานใหม่" : "📝 แก้ไขข้อมูลคิวงาน";
+                container.innerHTML = `
+                    <div class="admin-form-group">
+                        <input type="number" id="inputQueueNum" class="admin-input" placeholder="เลขคิว">
+                        <input type="text" id="inputQueueId" class="admin-input" placeholder="รหัสคิว">
+                    </div>
+                    <div class="admin-form-group">
+                        <input type="text" id="inputName" class="admin-input" placeholder="ชื่อลูกค้า">
+                        <input type="text" id="inputContact" class="admin-input" placeholder="ช่องทางติดต่อ">
+                    </div>
+                    <div class="admin-form-group">
+                        <input type="text" id="inputJobType" class="admin-input" placeholder="แนว / ประเภทงาน">
+                        <select id="inputStatus" class="admin-input">
+                            <option value="working">กำลังเริ่มงาน</option>
+                            <option value="waiting">รอคิว</option>
+                            <option value="success">เสร็จสิ้น</option>
+                        </select>
+                    </div>
+                    <textarea id="inputBrief" class="admin-input" style="height:60px; resize:none;" placeholder="บรีฟงานรายละเอียดต่างๆ"></textarea>
+                `;
+            } else if (currentTab === 'mini') {
+                document.getElementById('formTitle').innerText = document.getElementById('editIndex').value === "" ? "➕ เพิ่มบริการเล็กชิ้นใหม่" : "📝 แก้ไขบริการเล็ก";
+                container.innerHTML = `
+                    <div class="admin-form-group">
+                        <input type="text" id="miniTitle" class="admin-input" placeholder="ชื่อบริการ">
+                        <input type="text" id="miniPrice" class="admin-input" placeholder="ราคา (เช่น ฿69)">
+                    </div>
+                    <input type="text" id="miniDesc" class="admin-input" placeholder="คำอธิบายสั้นๆ" style="margin-bottom:8px;">
+                    <div class="link-preview-container">
+                        <input type="text" id="miniImg" class="admin-input" placeholder="วางลิงก์รูปภาพชิ้นงาน..." oninput="handleLinkInput(this.value)">
+                        <div class="live-preview-box" id="livePreviewBox">ระบบ AI รอสแกนแปลงลิงก์เป็นรูปภาพพรีวิว...</div>
+                    </div>
+                `;
+            } else if (currentTab === 'large') {
+                document.getElementById('formTitle').innerText = document.getElementById('editIndex').value === "" ? "➕ เพิ่มแพ็กเกจใหญ่ชิ้นใหม่" : "📝 แก้ไขแพ็กเกจใหญ่";
+                container.innerHTML = `
+                    <input type="text" id="largeName" class="admin-input" placeholder="ชื่อแพ็กเกจหลัก" style="margin-bottom:8px;">
+                    <input type="text" id="largeFeatures" class="admin-input" placeholder="สิ่งที่จะได้รับ (ใช้เครื่องหมายจุลภาค , คั่นรายละเอียด)" style="margin-bottom:8px;">
+                    <div class="admin-form-group">
+                        <input type="text" id="largeL1" class="admin-input" placeholder="หัวข้อราคาที่ 1 (เช่น ราคาวาดเริ่มต้น)">
+                        <input type="text" id="largeP1" class="admin-input" placeholder="ราคาที่ 1 (เช่น ฿250)">
+                    </div>
+                    <div class="admin-form-group">
+                        <input type="text" id="largeL2" class="admin-input" placeholder="หัวข้อราคาที่ 2 (เช่น เพิ่มพร็อพ)">
+                        <input type="text" id="largeP2" class="admin-input" placeholder="ราคาที่ 2 (เช่น +฿40)">
+                    </div>
+                    <input type="text" id="largeTotal" class="admin-input" placeholder="ราคาเน็ตสุทธิรวมสุทธิ (เช่น ฿250.-)" style="margin-bottom:8px;">
+                    <div class="link-preview-container">
+                        <input type="text" id="largeImg" class="admin-input" placeholder="วางลิงก์รูปภาพแบนเนอร์ใหญ่..." oninput="handleLinkInput(this.value)">
+                        <div class="live-preview-box" id="livePreviewBox">ระบบ AI รอสแกนแปลงลิงก์เป็นรูปภาพพรีวิว...</div>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleAdminMode() {
+            const btn = document.getElementById('adminToggleBtn');
+            const panel = document.getElementById('adminPanel');
+            if (!isAdminLoggedIn) {
+                authStep = 1;
+                document.getElementById('cuteModalTitle').innerText = "กรุณากรอกรหัสผ่านขั้นที่ 1";
+                document.getElementById('cuteModalInput').value = "";
+                document.getElementById('cuteAuthModal').style.display = 'flex';
+                document.getElementById('cuteModalInput').focus();
+            } else {
+                isAdminLoggedIn = false;
+                btn.classList.remove('active');
+                panel.style.display = 'none';
+                clearAdminForm();
+                renderAllElements();
+            }
+        }
+
+        function closeCuteModal() { document.getElementById('cuteAuthModal').style.display = 'none'; }
+
+        function submitCuteModal() {
+            const inputField = document.getElementById('cuteModalInput');
+            const val = inputField.value.trim();
+            const spin = document.querySelector('.modal-spin-icon');
+            
+            spin.style.animation = 'gentleSpin 0.5s linear infinite';
+            setTimeout(() => {
+                spin.style.animation = 'gentleSpin 6s linear infinite';
+                if (authStep === 1) {
+                    if (val === "khao151515") {
+                        authStep = 2;
+                        document.getElementById('cuteModalTitle').innerText = "กรุณากรอกรหัสผ่านขั้นที่ 2";
+                        inputField.value = "";
+                        inputField.focus();
+                    } else {
+                        document.getElementById('cuteModalTitle').innerText = "รหัสผ่านขั้นที่ 1 ผิดพลาดน้า 🥺";
+                        inputField.value = "";
+                    }
+                } else if (authStep === 2) {
+                    if (val === "Prangg19") {
+                        isAdminLoggedIn = true;
+                        closeCuteModal();
+                        document.getElementById('adminPanel').style.display = 'flex';
+                        document.getElementById('adminToggleBtn').classList.add('active');
+                        switchAdminTab('queue');
+                        renderAllElements();
+                    } else {
+                        document.getElementById('cuteModalTitle').innerText = "รหัสผ่านขั้นที่ 2 ผิดค่ะ ลองใหม่น้า";
+                        inputField.value = "";
+                    }
+                }
+            }, 300);
+        }
+
+        function saveAdminData() {
+            const idx = document.getElementById('editIndex').value;
+            
+            if (currentTab === 'queue') {
+                const num = document.getElementById('inputQueueNum').value.trim();
+                const id = document.getElementById('inputQueueId').value.trim();
+                const name = document.getElementById('inputName').value.trim();
+                const contact = document.getElementById('inputContact').value.trim();
+                const type = document.getElementById('inputJobType').value.trim();
+                const status = document.getElementById('inputStatus').value;
+                const brief = document.getElementById('inputBrief').value.trim();
+                if (!num || !id || !name || !contact || !type || !brief) return alert("กรุณาใส่ข้อมูลคิวงานให้ครบด้วยน้า");
+                
+                const obj = { num: Number(num), id, name, contact, status, type, brief };
+                if (idx === "") queueData.push(obj); else queueData[Number(idx)] = obj;
+                localStorage.setItem('saved_queues_v3', JSON.stringify(queueData));
+
+            } else if (currentTab === 'mini') {
+                const title = document.getElementById('miniTitle').value.trim();
+                const price = document.getElementById('miniPrice').value.trim();
+                const desc = document.getElementById('miniDesc').value.trim();
+                const img = document.getElementById('miniImg').value.trim();
+                if (!title || !price || !desc || !img) return alert("กรุณาใส่ข้อมูลบริการเล็กให้ครบค่ะ");
+                
+                const obj = { id: idx === "" ? "m_" + Date.now() : queueData[Number(idx)]?.id || Date.now(), title, price, desc, img };
+                if (idx === "") miniData.push(obj); else miniData[Number(idx)] = obj;
+                localStorage.setItem('saved_mini_v3', JSON.stringify(miniData));
+
+            } else if (currentTab === 'large') {
+                const name = document.getElementById('largeName').value.trim();
+                const feature = document.getElementById('largeFeatures').value.trim();
+                const label1 = document.getElementById('largeL1').value.trim();
+                const price1 = document.getElementById('largeP1').value.trim();
+                const label2 = document.getElementById('largeL2').value.trim();
+                const price2 = document.getElementById('largeP2').value.trim();
+                const total = document.getElementById('largeTotal').value.trim();
+                const img = document.getElementById('largeImg').value.trim();
+                if (!name || !feature || !total || !img) return alert("กรุณากรอกฟิลด์หลักแบนเนอร์ใหญ่ให้ครบถ้วนค่ะ");
+                
+                const obj = { id: idx === "" ? "l_" + Date.now() : largeData[Number(idx)]?.id || Date.now(), name, feature, label1, price1, label2, price2, total, img };
+                if (idx === "") largeData.push(obj); else largeData[Number(idx)] = obj;
+                localStorage.setItem('saved_large_v3', JSON.stringify(largeData));
+            }
+
+            clearAdminForm();
+            renderAllElements();
+        }
+
+        function startEditItem(type, index) {
+            currentTab = type;
+            switchAdminTab(type);
+            document.getElementById('editIndex').value = index;
+            generateFormFields();
+            
+            if (type === 'queue') {
+                const data = queueData[index];
+                document.getElementById('inputQueueNum').value = data.num;
+                document.getElementById('inputQueueId').value = data.id;
+                document.getElementById('inputName').value = data.name;
+                document.getElementById('inputContact').value = data.contact;
+                document.getElementById('inputJobType').value = data.type;
+                document.getElementById('inputStatus').value = data.status;
+                document.getElementById('inputBrief').value = data.brief;
+            } else if (type === 'mini') {
+                const data = miniData[index];
+                document.getElementById('miniTitle').value = data.title;
+                document.getElementById('miniPrice').value = data.price;
+                document.getElementById('miniDesc').value = data.desc;
+                document.getElementById('miniImg').value = data.img;
+                handleLinkInput(data.img);
+            } else if (type === 'large') {
+                const data = largeData[index];
+                document.getElementById('largeName').value = data.name;
+                document.getElementById('largeFeatures').value = data.feature;
+                document.getElementById('largeL1').value = data.label1;
+                document.getElementById('largeP1').value = data.price1;
+                document.getElementById('largeL2').value = data.label2;
+                document.getElementById('largeP2').value = data.price2;
+                document.getElementById('largeTotal').value = data.total;
+                document.getElementById('largeImg').value = data.img;
+                handleLinkInput(data.img);
+            }
+            document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function deleteItem(type, index) {
+            if (!confirm("ยืนยันการลบรายการชิ้นงานนี้ออกจากระบบหน้าเว็บไหมคะ?")) return;
+            if (type === 'queue') {
+                queueData.splice(index, 1);
+                localStorage.setItem('saved_queues_v3', JSON.stringify(queueData));
+            } else if (type === 'mini') {
+                miniData.splice(index, 1);
+                localStorage.setItem('saved_mini_v3', JSON.stringify(miniData));
+            } else if (type === 'large') {
+                largeData.splice(index, 1);
+                localStorage.setItem('saved_large_v3', JSON.stringify(largeData));
+            }
+            clearAdminForm();
+            renderAllElements();
+        }
+
+        function clearAdminForm() {
+            document.getElementById('editIndex').value = "";
+            generateFormFields();
+        }
+
+        function renderAllElements(filterKeyword = "") {
+            const miniBox = document.getElementById('miniCarouselContainer');
+            miniBox.innerHTML = "";
+            miniData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "banner-mini-card";
+                let inner = `
+                    <img class="banner-mini-img" src="${item.img}" alt="img">
+                    <div class="banner-mini-content">
+                        <div class="banner-mini-title">${item.title}</div>
+                        <div class="banner-mini-desc">${item.desc}</div>
+                        <div class="banner-mini-price">${item.price}</div>
+                    </div>
+                `;
+                if (isAdminLoggedIn) {
+                    inner += `
+                        <div class="card-admin-actions" style="padding:4px; gap:4px;">
+                            <button class="card-action-btn btn-edit" style="padding:2px 6px; font-size:9px;" onclick="startEditItem('mini', ${index})">แก้</button>
+                            <button class="card-action-btn btn-delete" style="padding:2px 6px; font-size:9px;" onclick="deleteItem('mini', ${index})">ลบ</button>
+                        </div>
+                    `;
+                }
+                card.innerHTML = inner;
+                miniBox.appendChild(card);
+            });
+
+            const largeBox = document.getElementById('largeCarouselContainer');
+            largeBox.innerHTML = "";
+            largeData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "product-card-large";
+                
+                let featuresHTML = "";
+                if (item.feature) {
+                    item.feature.split(',').forEach(f => {
+                        if (f.trim() !== "") featuresHTML += `<li>${f.trim()}</li>`;
+                    });
+                }
+
+                let inner = `
+                    <img class="product-img-preview" src="${item.img}" alt="Large Package Cover">
+                    <div class="product-info">
+                        <div class="product-name">${item.name}</div>
+                        <div>
+                            <div class="info-block-title">สิ่งที่จะได้รับ</div>
+                            <ul class="features-list">${featuresHTML}</ul>
+                        </div>
+                        <div>
+                            <div class="info-block-title">ราคาแก้แต่ละอย่าง</div>
+                            <div class="price-breakdown">
+                                <div class="price-item"><span>${item.label1 || 'ราคาตั้งต้น'}</span><span>${item.price1 || '฿0'}</span></div>
+                                <div class="price-item"><span>${item.label2 || 'แก้งานเพิ่ม'}</span><span>${item.price2 || '฿0'}</span></div>
+                            </div>
+                        </div>
+                        <div class="grand-price-box">
+                            <div class="info-block-title" style="margin:0;">ราคาเน็ตสุทธิ</div>
+                            <div class="grand-price-amount">${item.total}</div>
+                        </div>
+                    </div>
+                `;
+                if (isAdminLoggedIn) {
+                    inner += `
+                        <div class="card-admin-actions" style="padding:10px 20px;">
+                            <button class="card-action-btn btn-edit" onclick="startEditItem('large', ${index})">📝 แก้ไขแบนเนอร์ใหญ่</button>
+                            <button class="card-action-btn btn-delete" onclick="deleteItem('large', ${index})">❌ ลบแพ็กเกจ</button>
+                        </div>
+                    `;
+                }
+                card.innerHTML = inner;
+                largeBox.appendChild(card);
+            });
+
+            const queueBox = document.getElementById('queueList');
+            const noMatch = document.getElementById('noMatchMessage');
+            queueBox.innerHTML = "";
+            
+            queueData.sort((a, b) => Number(a.num) - Number(b.num));
+            let workingC = 0, waitingC = 0, successC = 0, matchCount = 0;
+            const searchStr = filterKeyword.trim().toLowerCase();
+
+            queueData.forEach((q, index) => {
+                if (q.status === 'working') workingC++;
+                if (q.status === 'waiting') waitingC++;
+                if (q.status === 'success') successC++;
+
+                if (searchStr !== "" && !q.id.toLowerCase().includes(searchStr) && !(`#${q.id}`).toLowerCase().includes(searchStr)) return;
+                matchCount++;
+
+                let statusText = q.status === 'working' ? 'กำลังเริ่มงาน' : (q.status === 'success' ? 'เสร็จสิ้น' : 'รอคิว');
+                const card = document.createElement('div');
+                card.className = "queue-user-card";
+                
+                let inner = `
+                    <div class="queue-user-header">
+                        <div class="queue-user-meta">
+                            <span class="queue-id-tag">รหัสคิว: #${q.id}</span>
+                            <span class="queue-user-name">คิวที่ ${q.num} : ${q.name}</span>
+                            <span class="queue-user-facebook">${q.contact}</span>
+                        </div>
+                        <span class="queue-status-badge ${q.status}">${statusText}</span>
+                    </div>
+                    <div class="queue-user-details">
+                        <div class="queue-detail-row"><span class="queue-detail-label">ประเภทงาน:</span><span class="queue-detail-value">${q.type}</span></div>
+                        <div class="queue-detail-row"><span class="queue-detail-label">บรีฟงาน:</span><span class="queue-detail-value">${q.brief}</span></div>
+                    </div>
+                `;
+                if (isAdminLoggedIn) {
+                    inner += `
+                        <div class="card-admin-actions">
+                            <button class="card-action-btn btn-edit" onclick="startEditItem('queue', ${index})"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span>แก้ไขคิว</span></button>
+                            <button class="card-action-btn btn-delete" onclick="deleteItem('queue', ${index})"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg><span>ลบ</span></button>
+                        </div>
+                    `;
+                }
+                card.innerHTML = inner;
+                queueBox.appendChild(card);
+            });
+
+            document.getElementById('countWorking').innerText = `${workingC} คิว`;
+            document.getElementById('countWaiting').innerText = `${waitingC} คิว`;
+            document.getElementById('countSuccess').innerText = `${successC} คิว`;
+            noMatch.style.display = (matchCount === 0 && searchStr !== "") ? 'block' : 'none';
+        }
+
+        function searchQueue() { renderAllElements(document.getElementById('queueSearchInput').value); }
+        document.getElementById('queueSearchInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') searchQueue(); });
+        document.getElementById('cuteModalInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') submitCuteModal(); });
+
+        generateFormFields();
+        renderAllElements();
+    </script>
+</body>
+</html>
